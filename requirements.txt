@@ -1,0 +1,11 @@
+python-dotenv
+langchain
+langchain-community
+langchain-mistralai
+langchain-core
+langchain-openai
+langchain-text-splitters
+chromadb
+pypdf
+openai
+streamlit

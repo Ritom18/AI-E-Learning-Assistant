@@ -1,6 +1,8 @@
 # 📚 DocTutor AI
 
 An intelligent PDF chat application that allows you to upload PDFs and interact with them using AI. Built with LangChain, Streamlit, and powered by Mistral AI and OpenAI.
+<br>
+[visit website](https://doctutor-ai-32bwkdtsk5ah6jbtlnst4u.streamlit.app/)
 
 ## Features
 

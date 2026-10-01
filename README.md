@@ -1,157 +1,174 @@
-# 📚 DocTutor AI
+#  Smart E-Learning AI Chatbot
 
-An intelligent PDF chat application that allows you to upload PDFs and interact with them using AI. Built with LangChain, Streamlit, and powered by Mistral AI and OpenAI.
-<br>
+An intelligent document-based learning assistant that enables users to interact with educational PDF documents using natural language. The application combines **Retrieval-Augmented Generation (RAG)** with semantic search to deliver accurate, context-aware responses based on the uploaded documents instead of relying solely on the language model's internal knowledge.
 
-[Visit Website](https://doctutor-ai-32bwkdtsk5ah6jbtlnst4u.streamlit.app/)  
-<br><hr>
+Built with **Python**, **Streamlit**, **LangChain**, **ChromaDB**, **HuggingFace Embeddings**, and **Mistral AI**, the chatbot provides an interactive platform for students, educators, and researchers to quickly retrieve information from one or multiple PDF files.
 
-[Demo](https://youtu.be/eVZEgZwXYrk?si=X1Qq_ysNKIL807_Z)
 
-## Features
 
-- 📄 **PDF Upload & Processing** - Upload PDF files and automatically split them into manageable chunks
-- 🔍 **Semantic Search** - Uses embeddings to find relevant content from your documents
-- 💬 **AI Chat Interface** - Chat with your documents using an intuitive web interface
-- 🧠 **RAG System** - Retrieval-Augmented Generation for accurate, context-aware responses
-- 💾 **Vector Database** - Persistent storage of embeddings using ChromaDB
-- 🚀 **Two Interfaces** - Web UI with Streamlit and CLI interface for flexibility
+#  Key Features
 
-## Tech Stack
+-  Upload and process one or more PDF documents
+-  Ask questions in natural language
+-  Semantic document retrieval using vector embeddings
+-  Context-aware answers generated from uploaded PDFs
+-  Displays the relevant document and page information
+-  Interactive chat interface built with Streamlit
+-  Fast document retrieval using Chroma Vector Database
+-  Supports multiple PDF documents simultaneously
 
-- **LangChain** - LLM orchestration and RAG implementation
-- **Streamlit** - Web application framework
-- **ChromaDB** - Vector database for embeddings
-- **Mistral AI** - LLM for chat responses
-- **OpenAI** - Embeddings generation
-- **PyPDF** - PDF loading and processing
 
-## Prerequisites
 
-- Python 3.9+
-- Mistral AI API key
-- OpenAI API key
+#  Technology Stack
 
-## Installation
+ Component - Technology 
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd DocTutor AI
-   ```
+ Programming Language - Python 3.11 
+ User Interface - Streamlit 
+ Framework - LangChain 
+ Large Language Model - Mistral Small (mistral-small-2506) 
+ Embedding Model - HuggingFace all-MiniLM-L6-v2 
+ Vector Database - ChromaDB 
+ PDF Loader - PyPDFLoader 
+ Text Splitter - Recursive Character Text Splitter 
 
-2. **Create a virtual environment**
-   ```bash
-   uv venv 
-   .venv\Scripts\activate  # On Windows
-   # source .venv/bin/activate  # On macOS/Linux
-   ```
 
-3. **Install dependencies**
-   ```bash
-   uv pip install -r requirements.txt
-   ```
 
-4. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   Then edit `.env` and add your API keys:
-   ```
-   MISTRAL_API_KEY=your_mistral_api_key
-   OPENAI_API_KEY=your_openai_api_key
-   ```
+#  System Architecture
 
-## Usage
 
-### Web Interface (Streamlit)
 
-```bash
+A[Upload PDF Documents]
+--> B[PyPDFLoader]
+
+B --> C[Text Extraction]
+
+C --> D[Text Chunking]
+
+D --> E[HuggingFace Embeddings]
+
+E --> F[Chroma Vector Database]
+
+G[User Question]
+--> H[Semantic Retriever (MMR)]
+
+F --> H
+
+H --> I[Relevant Document Chunks]
+
+I --> J[Prompt Construction]
+
+J --> K[Mistral AI]
+
+K --> L[Generated Response]
+
+L --> M[Streamlit Chat Interface]
+ Workflow
+
+The chatbot follows a Retrieval-Augmented Generation (RAG) pipeline:
+
+Upload one or more PDF documents.
+Extract textual content from each document.
+Divide the extracted text into overlapping chunks.
+Convert each chunk into vector embeddings.
+Store embeddings in the Chroma vector database.
+Accept a question from the user.
+Retrieve the most relevant document chunks using semantic similarity.
+Send the retrieved context along with the user query to the Mistral language model.
+Generate a context-aware response.
+Display the answer along with the corresponding document source.
+ Project Structure:
+Smart-E-Learning-Chatbot/
+│
+├── app.py
+├── main.py
+├── create_database.py
+├── requirements.txt
+├── .env
+│
+├── chroma-db/
+│
+├── pdf/
+│
+└── README.md
+ Installation
+
+Clone the repository
+
+git clone https://github.com/your-username/Smart-E-Learning-Chatbot.git
+
+Move to the project directory
+
+cd Smart-E-Learning-Chatbot
+
+Install the required packages
+
+pip install -r requirements.txt
+ Environment Setup
+
+Create a .env file in the project directory.
+
+MISTRAL_API_KEY=your_api_key
+
+Replace your_api_key with your own Mistral API key.
+
+ Running the Application
+
+Launch the Streamlit application
+
 streamlit run app.py
-```
 
-Then:
-1. Open http://localhost:8501 in your browser
-2. Upload a PDF file using the sidebar
-3. Click "Process PDF" to create embeddings
-4. Start chatting with your document!
+Alternatively, run the command-line version
 
-### CLI Interface
-
-```bash
 python main.py
-```
+ Retrieval-Augmented Generation (RAG)
 
-Then:
-1. Type your questions in the terminal
-2. Get AI-powered answers based on your document
-3. Type `0` to exit
+Unlike conventional chatbots, this application does not rely solely on the knowledge stored within the language model.
 
-### Create Vector Database
+Instead, it follows a Retrieval-Augmented Generation approach:
 
-To pre-process a PDF and create embeddings:
+The uploaded documents are converted into vector embeddings.
+Relevant document sections are retrieved whenever a user asks a question.
+Only the retrieved content is supplied to the language model.
+The generated response is grounded in the uploaded documents, improving accuracy and reducing hallucinated answers.
+ Application Overview
 
-```bash
-python create_database.py
-```
+The application provides:
 
-Edit the file path in `create_database.py` to process different PDFs.
+Home page for uploading PDF documents
+PDF processing interface
+Chat interface for question answering
+Retrieved source display with page information
+Context-aware AI-generated responses
+ Future Enhancements
 
-## Project Structure
+Several improvements can further extend the system:
 
-```
-DocTutor AI/
-├── app.py                 # Streamlit web interface
-├── main.py               # CLI interface with RAG system
-├── create_database.py    # Database initialization script
-├── requirements.txt      # Python dependencies
-├── .env                  # Environment variables (NOT tracked by git)
-├── .env.example          # Example environment file
-├── .gitignore           # Git ignore rules
-├── pdf/                 # PDF files directory
-└── chroma-db/           # Vector database storage
-```
+ Voice-based interaction using speech recognition
+ Automatic document summarization
+ AI-generated quizzes and flashcards
+ Learning analytics dashboard
+ Multilingual document support
+ Cloud deployment
+ User authentication and personalized learning history
+ Security
 
-## Environment Variables
+To protect sensitive information:
 
-Create a `.env` file in the root directory:
+Store API keys in the .env file.
+Never hard-code credentials.
+Add .env to .gitignore.
+Avoid committing private API keys to GitHub.
+ License
 
-```
-MISTRAL_API_KEY=your_mistral_api_key
-OPENAI_API_KEY=your_openai_api_key
-```
+This project is distributed under the MIT License.
 
-**Note**: The `.env` file is git-ignored for security. Never commit API keys.
+ Author
 
-## How It Works
+Ritom Chakraborty
 
-1. **Document Loading** - PDFs are loaded and parsed using PyPDFLoader
-2. **Chunking** - Documents are split into overlapping chunks for better context
-3. **Embeddings** - Each chunk is converted to embeddings using OpenAI's embedding model
-4. **Storage** - Embeddings are stored in ChromaDB for efficient retrieval
-5. **Retrieval** - When you ask a question, relevant chunks are retrieved using similarity search
-6. **Generation** - Mistral AI generates responses based on the retrieved context
+M.Sc. Computer Science (Data Science)
 
-## Configuration
+AI | Machine Learning | Natural Language Processing | Retrieval-Augmented Generation
 
-### Text Splitting
-- **Chunk Size**: 1000 characters
-- **Chunk Overlap**: 200 characters
-
-### Retriever Settings
-- **Search Type**: Maximum Marginal Relevance (MMR)
-- **K**: 4 relevant documents
-- **Fetch K**: 10 initial candidates
-- **Lambda Multiplier**: 0.5
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Support
-
-For issues or questions, please open an issue on the GitHub repository.
+ 
